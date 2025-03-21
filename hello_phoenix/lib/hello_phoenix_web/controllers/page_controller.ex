@@ -1,9 +1,11 @@
 defmodule HelloPhoenixWeb.PageController do
   use HelloPhoenixWeb, :controller
 
+  alias HelloPhoenix.Repo
+  alias HelloPhoenix.Task
+
   def home(conn, _params) do
-    # The home page is often custom made,
-    # so skip the default app layout.
-    render(conn, :home)
+    tasks = Repo.all(Task)
+    render(conn, :home, tasks: tasks)
   end
 end

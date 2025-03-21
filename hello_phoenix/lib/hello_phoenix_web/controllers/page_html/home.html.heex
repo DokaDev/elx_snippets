@@ -220,3 +220,61 @@
     </div>
   </div>
 </div>
+
+<div class="bg-white p-6 rounded-lg shadow-md">
+  <h1 class="text-2xl font-bold mb-4">Task Manager</h1>
+  
+  <div class="mb-6">
+    <a href="/tasks/new" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+      Create New Task
+    </a>
+  </div>
+
+  <h2 class="text-xl font-semibold mb-3">Your Tasks</h2>
+  
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-200">
+      <thead>
+        <tr>
+          <th class="py-2 px-4 border-b">Title</th>
+          <th class="py-2 px-4 border-b">Description</th>
+          <th class="py-2 px-4 border-b">Status</th>
+          <th class="py-2 px-4 border-b">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for task <- @tasks do %>
+          <tr>
+            <td class="py-2 px-4 border-b"><%= task.title %></td>
+            <td class="py-2 px-4 border-b"><%= task.description %></td>
+            <td class="py-2 px-4 border-b">
+              <%= if task.completed do %>
+                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Completed</span>
+              <% else %>
+                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-semibold">Pending</span>
+              <% end %>
+            </td>
+            <td class="py-2 px-4 border-b">
+              <div class="flex space-x-2">
+                <a href={"/tasks/#{task.id}"} class="text-blue-500 hover:underline">View</a>
+                <a href={"/tasks/#{task.id}/edit"} class="text-yellow-500 hover:underline">Edit</a>
+                <a href={"/tasks/#{task.id}"} 
+                   data-method="delete" 
+                   data-confirm="Are you sure?" 
+                   class="text-red-500 hover:underline">Delete</a>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        
+        <%= if Enum.empty?(@tasks) do %>
+          <tr>
+            <td colspan="4" class="py-4 px-4 text-center text-gray-500">
+              No tasks yet. Create your first task using the button above.
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
